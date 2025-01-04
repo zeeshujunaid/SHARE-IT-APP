@@ -8,8 +8,8 @@ import {
   ActivityIndicator,
   Image,
 } from "react-native";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, db, googleProvider, facebookProvider } from "../../utils/firebase";
+import { createUserWithEmailAndPassword, } from "firebase/auth";
+import { auth, db, } from "../../utils/firebase";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -56,7 +56,7 @@ export default function Signup() {
             center: center,
           });
 
-          router.push("/(tabs)/");
+          router.push("/(drawer)/");
           setName("");
           setEmail("");
           setCenter("");

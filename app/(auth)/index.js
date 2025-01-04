@@ -20,7 +20,7 @@ const WelcomeScreen = () => {
           text1: 'Welcome Back!',
           text2: 'Hope you like the app',
         });
-        router.push('(tabs)'); // Replace '(tabs)' with your dashboard route
+        router.push('(drawer)'); // Replace '(tabs)' with your dashboard route
       } else {
         Toast.show({
           type: 'info',

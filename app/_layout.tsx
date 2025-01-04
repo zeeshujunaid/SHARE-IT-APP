@@ -1,4 +1,3 @@
-import '../global.css';
 import { Stack } from 'expo-router';
 import Toast from 'react-native-toast-message'; // Correct import
 import { Provider } from '../hooks/useAuth';
@@ -17,7 +16,7 @@ export default function RootLayout() {
           screenOptions={{ headerShown: false }}
           initialRouteName="(auth)/loading"
         >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
