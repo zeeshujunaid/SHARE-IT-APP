@@ -1,39 +1,39 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import '../global.css';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import Toast from 'react-native-toast-message'; // Correct import
+import { Provider } from '../hooks/useauth';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+export const unstable_settings = {
+  initialRouteName: '(auth)/loading',
+};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Provider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        {/* Expo Router Stack Navigation */}
+        <Stack
+          screenOptions={{ headerShown: false }}
+          initialRouteName="(auth)/loading"
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
+          <Stack.Screen name="LiveQuiz" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/marketingquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/designquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/appdevquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/softwarequiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/webdevquiz" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/quizResult" options={{ headerShown: false }} />
+        </Stack>
+
+        {/* Toast Component */}
+        <Toast />
+      </GestureHandlerRootView>
+    </Provider>
   );
 }
