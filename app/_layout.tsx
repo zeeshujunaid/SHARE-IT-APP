@@ -1,7 +1,7 @@
 import '../global.css';
 import { Stack } from 'expo-router';
 import Toast from 'react-native-toast-message'; // Correct import
-import { Provider } from '../hooks/useauth';
+import { Provider } from '../hooks/useAuth';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
@@ -23,12 +23,6 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
           <Stack.Screen name="LiveQuiz" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/marketingquiz" options={{ headerShown: false }}/>
-          <Stack.Screen name="(auth)/designquiz" options={{ headerShown: false }}/>
-          <Stack.Screen name="(auth)/appdevquiz" options={{ headerShown: false }}/>
-          <Stack.Screen name="(auth)/softwarequiz" options={{ headerShown: false }}/>
-          <Stack.Screen name="(auth)/webdevquiz" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/quizResult" options={{ headerShown: false }} />
         </Stack>
 
         {/* Toast Component */}
