@@ -13,7 +13,7 @@ import Toast from "react-native-toast-message";
 import { signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "expo-router";
-import { auth, db } from "../../utils/firebase";
+import { auth, db } from "../../../utils/firebase";
 
 export default function Profile() {
   const [profileInfo, setProfileInfo] = useState(null);

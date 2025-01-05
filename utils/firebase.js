@@ -5,12 +5,13 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6NEh44vlzaxZiV_1IvU0L8Jyx5_3a5yc",
-  authDomain: "saylani-quiz-app-d818e.firebaseapp.com",
-  projectId: "saylani-quiz-app-d818e",
-  storageBucket: "saylani-quiz-app-d818e.firebasestorage.app",
-  messagingSenderId: "190358209381",
-  appId: "1:190358209381:web:a9f76b56bf74a2edb3d78c"
+  apiKey: "AIzaSyChYjDo2RGAupiV2h-O816RdgIbESQ5ik8",
+  authDomain: "todo-list-55767.firebaseapp.com",
+  projectId: "todo-list-55767",
+  storageBucket: "todo-list-55767.firebasestorage.app",
+  messagingSenderId: "416968415245",
+  appId: "1:416968415245:web:2cd136f08079b176dd5d44",
+  measurementId: "G-R9FVZWNJVP"
 };
 
 const firebase = initializeApp(firebaseConfig);
