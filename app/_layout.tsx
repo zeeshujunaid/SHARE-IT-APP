@@ -4,7 +4,7 @@ import { Provider } from '../hooks/useAuth';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  initialRouteName: '(auth)/loading',
+  initialRouteName: '(auth)/welcome',
 };
 
 export default function RootLayout() {
@@ -14,10 +14,12 @@ export default function RootLayout() {
         {/* Expo Router Stack Navigation */}
         <Stack
           screenOptions={{ headerShown: false }}
-          initialRouteName="(auth)/loading"
+          initialRouteName="(auth)/welcome"
         >
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/welcome" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/welcomeone" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/welcometwo" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />

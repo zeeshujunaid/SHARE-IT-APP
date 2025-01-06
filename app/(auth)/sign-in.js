@@ -59,7 +59,7 @@ export default function SignIn() {
         <View style={styles.background}>
             <View style={styles.container}>
                 <Image
-                    source={{ uri: 'https://quiz.saylaniwelfare.com/images/smit.png' }} // Replace with your logo URL
+ source={require('../../assets/images/logo1.png')}// Replace with your logo URL
                     style={styles.logo}
                 />
                 <Text style={styles.heading}>Welcome Back!</Text>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#E8F5E9", // Light green background
+        backgroundColor: "#4d9efa", // Light green background
         padding: 20,
     },
     container: {
