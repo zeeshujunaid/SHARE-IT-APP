@@ -59,7 +59,7 @@ export default function SignIn() {
         <View style={styles.background}>
             <View style={styles.container}>
                 <Image
- source={require('../../assets/images/logo1.png')}// Replace with your logo URL
+                    source={require('../../assets/images/logo1.png')}// Replace with your logo URL
                     style={styles.logo}
                 />
                 <Text style={styles.heading}>Welcome Back!</Text>
