@@ -5,26 +5,26 @@ import { StatusBar } from "expo-status-bar";
 import { Video } from 'expo-av';
 
 const Welcometwo = () => {
-  const router = useRouter();
-  const videoRef = useRef(null);
-  const navigation = useNavigation();
-
-  const checkUser = async () => {
-    router.push('/sign-in');
-    console.log('Welcome 2 page');
-  };
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      // Pause video playback when the screen is navigated away
-      if (videoRef.current) {
-        videoRef.current.pauseAsync();
-      }
-    });
-
-    return unsubscribe; // Cleanup listener on component unmount
-  }, [navigation]);
-
+ const router = useRouter();
+   const videoRef = useRef(null);
+   const navigation = useNavigation();
+ 
+   const checkUser = async () => {
+     router.push('/sign-in');
+     console.log('Welcome page');
+ 
+   };
+ 
+   useEffect(() => {
+     const unsubscribe = navigation.addListener('blur', () => {
+       // Pause video playback when the screen is navigated away
+       if (videoRef.current) {
+         videoRef.current.pauseAsync();
+       }
+     });
+ 
+     return unsubscribe; // Cleanup listener on component unmount
+   }, [navigation]);
   return (
     <View style={styles.container}>
       {/* Background Video */}

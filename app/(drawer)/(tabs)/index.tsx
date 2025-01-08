@@ -21,7 +21,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/marketingquiz')} // Use router.push here
             >
               <Image
-              source={require('../../../assets/images/digitalmarketing.png')} // Use local image
+              source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Digital Marketing Quiz</Text>
@@ -32,7 +32,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/softwarequiz')} // Navigate using router.push
             >
               <Image
-               source={require('../../../assets/images/softwareEngeneering.jpg')} // Use local image
+               source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Software Engeneering Quiz</Text>
@@ -46,7 +46,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/webdevquiz')} // Navigate using router.push
             >
               <Image
-              source={require('../../../assets/images/webdevelopment.png')} // Use local image
+              source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Web Development Quiz</Text>
@@ -57,7 +57,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/appdevquiz')} // Navigate using router.push
             >
               <Image
-            source={require('../../../assets/images/app.png')} // Use local image
+            source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>App Development Quiz</Text>
@@ -71,7 +71,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/designquiz')} // Navigate using router.push
             >
               <Image
-                source={require('../../../assets/images/uiuxdesign.webp')} // Use local image
+                source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>UI-UX Quiz</Text>
@@ -82,7 +82,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('/LiveQuiz')} // Navigate using router.push
             >
               <Image
-               source={require('../../../assets/images/livequiz.png')} // Use local image
+               source={require('../../../assets/images/whitelogo.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Enter Live Quiz</Text>

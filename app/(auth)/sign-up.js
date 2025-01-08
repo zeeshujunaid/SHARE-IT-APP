@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,11 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  Animated,
+  ScrollView,
 } from "react-native";
-import { createUserWithEmailAndPassword, } from "firebase/auth";
-import { auth, db, } from "../../utils/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../utils/firebase";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -25,6 +27,10 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const translateY = useRef(new Animated.Value(450)).current;
+  const logoTranslateY = useRef(new Animated.Value(0)).current;
 
   const handleSignup = () => {
     if (email !== "" && password !== "") {
@@ -80,48 +86,64 @@ export default function Signup() {
     }
   };
 
-  // const handleGoogleSignup = () => {
-  //   signInWithPopup(auth, googleProvider)
-  //     .then(async (userCredential) => {
-  //       const user = userCredential.user;
-  //       await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
-  //       router.push("/(tabs)/");
-  //     })
-  //     .catch((error) => {
-  //       Toast.show({
-  //         type: "error",
-  //         text1: "Google Signup Failed",
-  //         text2: error.message,
-  //       });
-  //     });
-  // };
-
-  // const handleFacebookSignup = () => {
-  //   signInWithPopup(auth, facebookProvider)
-  //     .then(async (userCredential) => {
-  //       const user = userCredential.user;
-  //       await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
-  //       router.push("/(tabs)/");
-  //     })
-  //     .catch((error) => {
-  //       Toast.show({
-  //         type: "error",
-  //         text1: "Facebook Signup Failed",
-  //         text2: error.message,
-  //       });
-  //     });
-  // };
+  const toggleAnimation = () => {
+    if (expanded) {
+      // Collapse
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: 450,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(logoTranslateY, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]).start(() => setExpanded(false));
+    } else {
+      // Expand
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(logoTranslateY, {
+          toValue: -290, // Move logo higher
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]).start(() => setExpanded(true));
+    }
+  };
 
   return (
     <View style={styles.background}>
-      <View style={styles.container}>
+      <Animated.View
+        style={[styles.logoSection, { transform: [{ translateY: logoTranslateY }] }]}
+      >
         <Image
-          source={{ uri: 'https://quiz.saylaniwelfare.com/images/smit.png' }}
+          source={require("../../assets/images/bgremovedlogo.png")}
           style={styles.logo}
         />
+      </Animated.View>
+
+      <ScrollView
+        style={styles.contentSection}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <TouchableOpacity onPress={toggleAnimation} style={styles.iconContainer}>
+          <FontAwesome
+            name={expanded ? "chevron-down" : "chevron-up"}
+            size={30}
+            color="#000"
+          />
+        </TouchableOpacity>
+
         <Text style={styles.heading}>Create an Account</Text>
         <Text style={styles.subheading}>Sign up to start your quiz journey</Text>
-  
+
         <TextInput
           style={styles.input}
           placeholder="Name"
@@ -129,7 +151,7 @@ export default function Signup() {
           value={name}
           onChangeText={setName}
         />
-  
+
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -137,7 +159,7 @@ export default function Signup() {
           value={email}
           onChangeText={setEmail}
         />
-  
+
         <TextInput
           style={styles.input}
           placeholder="Center"
@@ -145,7 +167,7 @@ export default function Signup() {
           value={center}
           onChangeText={setCenter}
         />
-  
+
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.inputWithIcon}
@@ -159,38 +181,23 @@ export default function Signup() {
             <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={24} color="#808080" />
           </TouchableOpacity>
         </View>
-  
+
         <TouchableOpacity style={styles.button} onPress={handleSignup}>
           {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.buttonText}>Sign Up</Text>}
         </TouchableOpacity>
-  
-        {/* Social Sign Up Section
-        <View style={styles.socialLoginContainer}>
-    <Text style={styles.socialText}>Or sign in with</Text>
-    <View style={styles.socialIcons}>
-        <TouchableOpacity style={styles.socialIconButton}>
-            <Image
-                source={{ uri: 'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png' }}
-                style={styles.socialIcon}
-            />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialIconButton}>
-            <Image
-                source={{ uri: 'https://static.vecteezy.com/system/resources/previews/018/930/476/non_2x/facebook-logo-facebook-icon-transparent-free-png.png' }}
-                style={styles.socialIcon}
-            />
-        </TouchableOpacity>
-    </View>
-</View> */}
+
         <Text style={styles.footerText}>
           Already have an account?{" "}
-          <Text style={styles.linkText} onPress={() => router.push("/sign-in")}>
-            Log In
+          <Text
+            style={styles.linkText}
+            onPress={() => router.push("/sign-in")}
+          >
+            Sign In
           </Text>
         </Text>
-  
-        <Toast />
-      </View>
+      </ScrollView>
+
+      <Toast />
     </View>
   );
 }
@@ -198,47 +205,53 @@ export default function Signup() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    backgroundColor: "#fff",
+  },
+  logoSection: {
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#E8F5E9",
+    backgroundColor: "#fff",
+  },
+  contentSection: {
+    width: "100%",
+    backgroundColor: "#d4d4d4",
+    borderTopLeftRadius: 55,
+    borderTopRightRadius: 55,
     padding: 20,
   },
-  container: {
-    width: "95%",
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    borderRadius: 15,
-    alignItems: "center",
+  scrollContainer: {
+    paddingBottom: 40, // Add extra space at the bottom of the content
   },
   logo: {
-    width: 150,
-    height: 50,
+    width: 250,
+    height: 200,
     resizeMode: "contain",
-    marginBottom: 20,
-    padding: 20,
+  },
+  iconContainer: {
     alignSelf: "center",
+    marginBottom: 10,
   },
   heading: {
-    fontSize: 30,
-    color: "#33CC33",
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
+     fontSize: 30,
+     color: "#000",
+     fontWeight: "bold",
+      marginBottom: 20,
   },
   subheading: {
     fontSize: 18,
-    color: "#555555",
+    color: "#000",
     marginBottom: 20,
     textAlign: "center",
   },
   input: {
     width: "100%",
     padding: 15,
-    marginBottom: 15,
-    borderColor: "#33CC33",
+    marginBottom: 20,
+    borderColor: "#000",
     borderWidth: 1,
     borderRadius: 8,
-    color: "#333333",
+    color: "#000",
     backgroundColor: "#FFF",
     fontSize: 16,
   },
@@ -246,7 +259,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    borderColor: "#33CC33",
+    borderColor: "#000",
     borderWidth: 1,
     borderRadius: 8,
     backgroundColor: "#FFF",
@@ -256,13 +269,13 @@ const styles = StyleSheet.create({
   inputWithIcon: {
     flex: 1,
     padding: 15,
-    color: "#333333",
+    color: "#000",
     fontSize: 16,
   },
   button: {
     width: "100%",
     paddingVertical: 15,
-    backgroundColor: "#33CC33",
+    backgroundColor: "#000",
     borderRadius: 25,
     alignItems: "center",
     marginVertical: 20,
@@ -276,40 +289,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
     textAlign: "center",
-    // paddingTop:0,
   },
   linkText: {
-    color: "#33CC33",
+    color: "#4c9efa",
     fontWeight: "bold",
   },
- 
-//   socialLoginContainer: {
-//     alignItems: "center",
-//     // marginVertical: 30,
-// },
-// socialText: {
-//   fontSize: 14,
-//   color: "#555",
-//     marginBottom: 10,
-//     marginTop:10,
-//     textAlign: "center",
-// },
-// socialIcons: {
-//   flexDirection: "row",
-//   justifyContent: "center",  // Center icons horizontally
-//   alignItems: "center",      // Center icons vertically
-//   width: "100%",             // Ensure the container takes the full width
-//   paddingHorizontal: 70,     // Add padding to ensure proper spacing within the container
-// },
-
-// socialIconButton: {
-//   marginHorizontal: 10,      // Reduced margin for better spacing between icons
-//   borderRadius: 10,          // Rounded corners for the buttons
-//   overflow: "hidden",        // Ensures the image fits properly within the rounded button
-// },
-// socialIcon: {
-//     width: 60,
-//     height: 60,
-//     resizeMode: "contain",
-// },
 });

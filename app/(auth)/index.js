@@ -42,7 +42,7 @@ function Loading() {
     <View style={styles.background}>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/logo2.png')} // Replace with your image's actual path
+          source={require('../../assets/images/whitelogo.png')} // Replace with your image's actual path
           style={styles.loaderImage}
         />
         <Text style={styles.loadingText}>Loading...</Text>
