@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
@@ -10,7 +10,7 @@ const WelcomeScreen = () => {
   const videoRef = useRef(null);
 
   const checkUser = async () => {
-    router.push('/auth/sign-in');
+    router.push('/sign-in');
     console.log('Welcome page');
   };
 
@@ -22,9 +22,10 @@ const WelcomeScreen = () => {
       }
 
       return () => {
-        // Pause video when the screen is unfocused
+        // Pause and mute the video when the screen is unfocused or navigated away from
         if (videoRef.current) {
-          videoRef.current.pauseAsync();
+          videoRef.current.pauseAsync();  // Pause the video
+          videoRef.current.setStatusAsync({ volume: 0, isMuted: true });  // Mute the video sound
         }
       };
     }, [])
@@ -42,7 +43,7 @@ const WelcomeScreen = () => {
         isMuted={false}
         resizeMode="cover"
         shouldPlay
-        isLooping
+        // isLooping
       />
 
       {/* Transparent Overlay */}

@@ -28,7 +28,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const translateY = useRef(new Animated.Value(500)).current;
+  const translateY = useRef(new Animated.Value(450)).current;
   const logoTranslateY = useRef(new Animated.Value(0)).current;
 
   const handleSignup = () => {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignSelf: "center",
-    marginBottom: 10,
+    marginBottom: 42,
   },
   heading: {
     fontSize: 30,

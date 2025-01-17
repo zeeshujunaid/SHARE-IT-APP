@@ -42,7 +42,7 @@ function Loading() {
     <View style={styles.background}>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/bgremovedlogo.png')}
+          source={require('../../assets/images/whitelogo.png')}
           style={styles.loaderImage}
         />
         <Text style={styles.loadingText}>Loading...</Text>
