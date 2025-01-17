@@ -15,11 +15,12 @@ import { useRouter } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebase"; // Firebase configuration
 import Toast from 'react-native-toast-message';
-
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 
 export default function Header() {
   const [userName, setUserName] = useState("");
   const router = useRouter();
+  const navigation = useNavigation(); // Use useNavigation hook
 
   // Function to fetch user data from AsyncStorage or Firebase
   const fetchUserInfo = async () => {
@@ -46,7 +47,7 @@ export default function Header() {
               type: 'error',
               text1: 'Hi user',
               text2: ' plz restart the app to see the changes',
-          });
+            });
           }
         }
       }
@@ -70,6 +71,11 @@ export default function Header() {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.headerContainer}>
           <View style={styles.leftSection}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Text style={styles.drawerButton}>☰</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.middleSection}>
             <Text style={styles.nameText}>
               Hi, {userName || "User"}
             </Text>
@@ -96,7 +102,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingTop: 140,
+    paddingTop: 120,
   },
   headerContainer: {
     position: "absolute",
@@ -106,18 +112,34 @@ const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: "#fff",  
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 20,
-    height: 130,
+    height: 110,
+    borderBottomLeftRadius: 80,
+    borderBottomRightRadius: 80,
   },
   leftSection: {
-    flex: 1,
-    paddingLeft: 10,
+    width: "20%", // Left section takes 25% of width
+    alignItems: "center",
+    height: "100%",
+    justifyContent: "center",
+  },
+  middleSection: {
+    width: "60%", // Middle section takes 40% of width
+    alignItems: "center",
+    height: "100%",
+    justifyContent: "center",
+  },
+  rightSection: {
+    width: "20%", // Right section takes 30% of width
+    alignItems: "center",
+    height: "100%",
+    justifyContent: "center",
   },
   nameText: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
     color: "#000",
     marginBottom: 4,
@@ -128,17 +150,15 @@ const styles = StyleSheet.create({
     color: "green",
     marginTop: 5,
   },
-  rightSection: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 59.9,
+  drawerButton: {
+    fontSize: 30,
+    color: "#000",
   },
   profileIcon: {
     width: 60,
     height: 60,
     borderRadius: 35,
     borderWidth: 2,
-    
     borderColor: "#fff",
   },
 });
