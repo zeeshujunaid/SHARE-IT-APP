@@ -42,7 +42,7 @@ function Loading() {
     <View style={styles.background}>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/whitelogo.png')} // Replace with your image's actual path
+          source={require('../../assets/images/bgremovedlogo.png')}
           style={styles.loaderImage}
         />
         <Text style={styles.loadingText}>Loading...</Text>
@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000', // Matching black for the background
+    backgroundColor: '#fff', // Matching black for the background
   },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Slightly transparent black for the container
+    backgroundColor: '#fff',
     padding: 20,
     borderRadius: 15,
   },

@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
   Image,
   Animated,
-  ScrollView,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
@@ -16,7 +15,7 @@ import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 import Toast from "react-native-toast-message";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Signup() {
   const router = useRouter();
@@ -29,11 +28,11 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const translateY = useRef(new Animated.Value(450)).current;
+  const translateY = useRef(new Animated.Value(500)).current;
   const logoTranslateY = useRef(new Animated.Value(0)).current;
 
   const handleSignup = () => {
-    if (email !== "" && password !== "") {
+    if (name && email && center && password) {
       setLoading(true);
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
@@ -88,7 +87,6 @@ export default function Signup() {
 
   const toggleAnimation = () => {
     if (expanded) {
-      // Collapse
       Animated.parallel([
         Animated.timing(translateY, {
           toValue: 450,
@@ -102,7 +100,6 @@ export default function Signup() {
         }),
       ]).start(() => setExpanded(false));
     } else {
-      // Expand
       Animated.parallel([
         Animated.timing(translateY, {
           toValue: 0,
@@ -110,7 +107,7 @@ export default function Signup() {
           useNativeDriver: true,
         }),
         Animated.timing(logoTranslateY, {
-          toValue: -290, // Move logo higher
+          toValue: -250,
           duration: 500,
           useNativeDriver: true,
         }),
@@ -129,9 +126,8 @@ export default function Signup() {
         />
       </Animated.View>
 
-      <ScrollView
-        style={styles.contentSection}
-        contentContainerStyle={styles.scrollContainer}
+      <Animated.View
+        style={[styles.contentSection, { transform: [{ translateY }] }]}
       >
         <TouchableOpacity onPress={toggleAnimation} style={styles.iconContainer}>
           <FontAwesome
@@ -141,31 +137,31 @@ export default function Signup() {
           />
         </TouchableOpacity>
 
-        <Text style={styles.heading}>Create an Account</Text>
-        <Text style={styles.subheading}>Sign up to start your quiz journey</Text>
+        <Text style={styles.heading}>Create Account</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Name"
           placeholderTextColor="#808080"
-          value={name}
           onChangeText={setName}
+          value={name}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#808080"
-          value={email}
+          keyboardType="email-address"
           onChangeText={setEmail}
+          value={email}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Center"
           placeholderTextColor="#808080"
-          value={center}
           onChangeText={setCenter}
+          value={center}
         />
 
         <View style={styles.passwordContainer}>
@@ -174,20 +170,28 @@ export default function Signup() {
             placeholder="Password"
             placeholderTextColor="#808080"
             secureTextEntry={!showPassword}
-            value={password}
             onChangeText={setPassword}
+            value={password}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={24} color="#808080" />
+            <FontAwesome
+              name={showPassword ? "eye-slash" : "eye"}
+              size={24}
+              color="#808080"
+            />
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleSignup}>
-          {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.buttonText}>Sign Up</Text>}
+          {loading ? (
+            <ActivityIndicator size={24} color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Sign Up</Text>
+          )}
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
-          Already have an account?{" "}
+          Already have an account? {" "}
           <Text
             style={styles.linkText}
             onPress={() => router.push("/sign-in")}
@@ -195,7 +199,7 @@ export default function Signup() {
             Sign In
           </Text>
         </Text>
-      </ScrollView>
+      </Animated.View>
 
       <Toast />
     </View>
@@ -214,14 +218,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   contentSection: {
+    position: "absolute",
+    bottom: 0,
     width: "100%",
+    height: 550,
     backgroundColor: "#d4d4d4",
     borderTopLeftRadius: 55,
     borderTopRightRadius: 55,
     padding: 20,
-  },
-  scrollContainer: {
-    paddingBottom: 40, // Add extra space at the bottom of the content
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
     width: 250,
@@ -233,21 +239,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   heading: {
-     fontSize: 30,
-     color: "#000",
-     fontWeight: "bold",
-      marginBottom: 20,
-  },
-  subheading: {
-    fontSize: 18,
+    fontSize: 30,
     color: "#000",
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: "center",
   },
   input: {
     width: "100%",
     padding: 15,
-    marginBottom: 20,
+    marginBottom: 15,
     borderColor: "#000",
     borderWidth: 1,
     borderRadius: 8,

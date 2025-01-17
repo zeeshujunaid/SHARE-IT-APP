@@ -1,30 +1,34 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { useRouter, useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import { Video } from 'expo-av';
+import { useFocusEffect } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
   const router = useRouter();
   const videoRef = useRef(null);
-  const navigation = useNavigation();
 
   const checkUser = async () => {
-    router.push('/welcomeone');
+    router.push('/auth/sign-in');
     console.log('Welcome page');
-
   };
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      // Pause video playback when the screen is navigated away
+  useFocusEffect(
+    useCallback(() => {
+      // Play video when the screen is focused
       if (videoRef.current) {
-        videoRef.current.pauseAsync();
+        videoRef.current.playAsync();
       }
-    });
 
-    return unsubscribe; // Cleanup listener on component unmount
-  }, [navigation]);
+      return () => {
+        // Pause video when the screen is unfocused
+        if (videoRef.current) {
+          videoRef.current.pauseAsync();
+        }
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -47,7 +51,7 @@ const WelcomeScreen = () => {
         <View style={styles.contentBox}>
           {/* Logo */}
           <Image
-            source={{ uri: "https://quiz.saylaniwelfare.com/images/smit.png" }} // Replace with your logo path
+            source={{ uri: "https://quiz.saylaniwelfare.com/images/smit.png" }}
             style={styles.logo}
           />
 
