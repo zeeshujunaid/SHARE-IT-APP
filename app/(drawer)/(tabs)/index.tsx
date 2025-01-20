@@ -1,95 +1,70 @@
-
 import React from "react";
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "@/components/Header";
-import { useRouter } from "expo-router"; // Import useRouter
 
 export default function QuizHomeScreen() {
-  const router = useRouter(); // Initialize router
+  const posts = [
+    {
+      id: 1,
+      profilePic: "https://via.placeholder.com/50",
+      name: "John Doe",
+      date: "January 19, 2025",
+      content: "This is the content of the first post. It’s a small paragraph with some meaningful text.",
+    },
+    {
+      id: 2,
+      profilePic: "https://via.placeholder.com/50",
+      name: "Jane Smith",
+      date: "January 18, 2025",
+      content: "This is the content of the second post. It’s a small paragraph with more meaningful text.",
+    },
+    {
+      id: 3,
+      profilePic: "https://via.placeholder.com/50",
+      name: "Michael Brown",
+      date: "January 17, 2025",
+      content: "The content of this post is also a small paragraph. It’s designed to show how posts will look.",
+    },
+    {
+      id: 4,
+      profilePic: "https://via.placeholder.com/50",
+      name: "Emily Davis",
+      date: "January 16, 2025",
+      content: "Here’s another example of a post with a profile picture, name, date, and a short paragraph.",
+    },
+    {
+      id: 5,
+      profilePic: "https://via.placeholder.com/50",
+      name: "Emily Davis",
+      date: "January 16, 2025",
+      content: "Here’s another example of a post with a profile picture, name, date, and a short paragraph.",
+    },
+  ];
 
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Main content */}
-        <View style={styles.contentContainer}>
-          <Text style={styles.heading}>Practice Quizzes</Text>
-
-          {/* Row 1 */}
-          <View style={styles.cardRow}>
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('./(auth)/marketingquiz')} // Use router.push here
-            >
-              <Image
-              source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>Digital Marketing Quiz</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('./(auth)/softwarequiz')} // Navigate using router.push
-            >
-              <Image
-               source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>Software Engeneering Quiz</Text>
-            </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {posts.map((post) => (
+          <View key={post.id} style={styles.postContainer}>
+            <View style={styles.profileSection}>
+              <Image source={{ uri: post.profilePic }} style={styles.profilePic} />
+              <View style={styles.profileDetails}>
+                <Text style={styles.profileName}>{post.name}</Text>
+                <Text style={styles.postDate}>{post.date}</Text>
+              </View>
+            </View>
+            <Text style={styles.postContent}>{post.content}</Text>
+            <View style={styles.actions}>
+              <TouchableOpacity style={styles.actionButton}>
+                <Text style={styles.actionText}>👍 Like</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.actionButton}>
+                <Text style={styles.actionText}>💬 Comment</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          {/* Row 2 */}
-          <View style={styles.cardRow}>
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('./(auth)/webdevquiz')} // Navigate using router.push
-            >
-              <Image
-              source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>Web Development Quiz</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('./(auth)/appdevquiz')} // Navigate using router.push
-            >
-              <Image
-            source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>App Development Quiz</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Row 3 */}
-          <View style={styles.cardRow}>
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('./(auth)/designquiz')} // Navigate using router.push
-            >
-              <Image
-                source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>UI-UX Quiz</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => router.push('/LiveQuiz')} // Navigate using router.push
-            >
-              <Image
-               source={require('../../../assets/images/whitelogo.png')} // Use local image
-                style={styles.cardImage}
-              />
-              <Text style={styles.cardText}>Enter Live Quiz</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        ))}
       </ScrollView>
     </View>
   );
@@ -98,53 +73,73 @@ export default function QuizHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E8F5E9", // Soft pastel background
+    backgroundColor: "#b1b0f4",
   },
-  scrollContainer: {
-    flexGrow: 1,
+  scrollContent: {
+    paddingTop: 110,
     paddingHorizontal: 16,
-    paddingBottom: 70, // Add extra space at the bottom to avoid last item hiding under tab bar
+    paddingBottom: 80,
   },
-  contentContainer: {
-    paddingTop: 10,
-    paddingBottom: 20,
+  postContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
-  heading: {
-    fontSize: 24,
+  profileSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 12,
+  },
+  profileDetails: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#000",
-    marginLeft: 16,
-    marginBottom: 25,
+    color: "#333",
   },
-  cardRow: {
+  postDate: {
+    fontSize: 12,
+    color: "#aaa",
+  },
+  postContent: {
+    fontSize: 15,
+    color: "#555",
+    lineHeight: 22,
+    marginBottom: 15,
+  },
+  actions: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
   },
-  card: {
-    backgroundColor: "#fff",
-    width: "48%", // Take up half the width in the row
-    padding: 20,
-    borderRadius: 12,
-    elevation: 5, // For Android shadow effect
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    justifyContent: "center",
+  actionButton: {
+    flex: 1,
     alignItems: "center",
-    marginBottom: 20, // Space between the cards
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 6,
+    backgroundColor: "#007BFF",
+    shadowColor: "#007BFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
-  cardImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 12,
-  },
-  cardText: {
-    marginTop: 10, // Gap between the image and text
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#333",
-    textAlign: "center",
+  actionText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });

@@ -18,8 +18,6 @@ export default function RootLayout() {
         >
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/welcome" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/welcomeone" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/welcometwo" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
