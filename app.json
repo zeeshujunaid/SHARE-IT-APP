@@ -4,7 +4,7 @@
     "slug": "SHARE-IT",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/whitelogo.png",
+    "icon": "./assets/images/doctorlogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/whitelogo.png",
+        "foregroundImage": "./assets/images/doctorlogo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.zeeshan.junaid.SHAREIT"
@@ -21,14 +21,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/whitelogo.png"
+      "favicon": "./assets/images/doctorlogo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/whitelogo.png",
+          "image": "./assets/images/doctorlogo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

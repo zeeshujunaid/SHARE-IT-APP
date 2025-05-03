@@ -73,7 +73,7 @@ export default function QuizHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#b1b0f4",
+    backgroundColor: "#bbdef5",
   },
   scrollContent: {
     paddingTop: 110,
